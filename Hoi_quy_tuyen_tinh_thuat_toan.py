@@ -34,12 +34,15 @@ theta = np.array([[0], [0], [0]])
 
 learing_rate = 0.1
 eps = 1e-4
+lambda_reg = 0.01
 
 
 #thuat toan gradient descent
 while True:
     
-    grad = (1/m) * np.dot(X.T, (np.dot(X, theta) - y_norm))
+    reg_l1 = (lambda_reg/m) * np.r_[[[0]], np.sign(theta[1:])]  # Lasso Regression
+    reg_l2 = (lambda_reg/m) * np.r_[[[0]], theta[1:]] # Ridge Regression
+    grad = (1/m) * np.dot(X.T, (np.dot(X, theta) - y_norm)) + reg_l1
 
     if np.all(np.abs(grad) < eps):
         break  
